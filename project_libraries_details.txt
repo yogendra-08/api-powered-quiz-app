@@ -1,0 +1,119 @@
+Project Libraries & File Documentation (Short Version)
+
+Dependencies (from requirements.txt)
+
+External Libraries:
+
+requests==2.31.0 – Used in quiz_app.py for API calls.
+
+pandas==2.1.0 – Used in stats_manager.py for CSV/DataFrame operations.
+
+scipy==1.11.0 – Listed but NOT used anywhere.
+
+numpy==1.25.0 – Used in stats_manager.py for numeric calculations.
+
+Standard Libraries:
+
+tkinter (ttk, messagebox, scrolledtext) – GUI (main.py, stats_manager.py).
+
+os, json – File operations and JSON handling (stats_manager.py).
+
+typing (Dict) – Type hints (stats_manager.py).
+
+html, random, datetime – Used in quiz_app.py for decoding, shuffling, timestamps.
+
+Note: Stats are computed using pandas/numpy; SciPy is unused.
+
+Files, Classes and Functions
+
+A) quiz_app.py (Quiz Logic & API)
+Imports: requests, html, random, datetime
+
+Class: QuizApp
+
+init(): Initializes quiz data and timers.
+
+fetch_questions(): Calls API, stores questions, decodes HTML, shuffles answers.
+
+get_current_question(): Returns current question or None.
+
+check_answer(): Checks correctness, stores user answer, updates score.
+
+next_question(): Moves to next question.
+
+get_progress(): Returns (current, total).
+
+calculate_percentage(): Score percentage.
+
+get_quiz_summary(): Returns complete quiz summary.
+
+reset_quiz(): Clears all quiz state.
+
+get_categories(), get_difficulties(): Static dropdown lists.
+
+Summary: Handles entire quiz flow — fetch, evaluate, track, summarize.
+
+B) stats_manager.py (Saving + Statistics)
+Imports: os, json, pandas, numpy, typing.Dict, tkinter*
+
+Constant: DEFAULT_CSV = data/quiz_history.csv
+
+Class: StatsManager
+
+init(): Ensures data folder + CSV exist.
+
+_read_df(): Safely loads CSV, fixes date type.
+
+save_quiz_result(): Converts summary to a row, JSON-encodes user_answers, appends to CSV.
+
+get_total_quizzes(): Returns total attempts.
+
+get_recent_quizzes(): Returns latest N attempts.
+
+get_statistics_summary(): Computes mean/median/mode/std, accuracy, best/worst scores.
+
+Note: stats_manager.py also contains a duplicate GUI class (same as main.py). Recommended to remove from here.
+
+C) main.py (Main GUI App)
+Imports: tkinter, ttk, messagebox, scrolledtext, QuizApp, StatsManager, sys
+
+Class: QuizGUI
+Handles all screens: main menu, quiz setup, quiz window, answer submission, results, statistics.
+
+main(): Starts Tkinter mainloop.
+
+D) tempCodeRunnerFile.py
+Only contains:
+from stats_manager import StatsManager
+
+E) data/quiz_history.csv
+Auto-created. Columns:
+date, category, difficulty, total_questions, correct_answers, incorrect_answers, score_percentage, time_taken_seconds, user_answers (JSON encoded)
+
+Quick Library Usage Map
+
+requests → quiz_app.py
+
+html → quiz_app.py
+
+random → quiz_app.py
+
+datetime → quiz_app.py
+
+pandas → stats_manager.py
+
+numpy → stats_manager.py
+
+scipy → unused
+
+tkinter → main.py, stats_manager.py
+
+os, json → stats_manager.py
+
+Notes & Recommendations
+
+SciPy is unused; remove from requirements or use it for advanced statistics.
+
+GUI is duplicated in stats_manager.py; keep GUI only in main.py.
+
+user_answers is stored as JSON; decode when displaying if needed.
