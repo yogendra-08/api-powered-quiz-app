@@ -46,6 +46,7 @@ class QuizApp:
         except Exception as e:
             print(f"Error fetching questions: {e}")
             return False
+            
     
     def get_current_question(self):
         return self.questions[self.current_question_index] if 0 <= self.current_question_index < len(self.questions) else None
